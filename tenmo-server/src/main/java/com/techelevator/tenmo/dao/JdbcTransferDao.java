@@ -1,9 +1,12 @@
 package com.techelevator.tenmo.dao;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
+@Component
 public class JdbcTransferDao implements TransferDao{
     private JdbcTemplate jdbcTemplate;
 
@@ -11,23 +14,22 @@ public class JdbcTransferDao implements TransferDao{
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    @Override
-    public void transferTo(long userId, BigDecimal amountToDeposit) {
-        String sql = "UPDATE account\n" +
-                "SET balance = \"balance + ?\"\n" +
-                "WHERE user_id = ?;";
-
-        jdbcTemplate.update(sql, userId, amountToDeposit);
-    }
 
     @Override
-    public void transferFrom(long userId, BigDecimal amountToWithdraw) {
+    public void transferTo(long userId, BigDecimal amountToTransfer) {
 
-        String sql = "UPDATE account\n" +
-                "SET balance = \"balance - ?\"\n" +
-                "WHERE user_id = ?;";
+        String sql = "BEGIN TRANSACTION;\n" +
+                "\n" +
+                "UPDATE account\n" +
+                "SET balance = balance + ?\n" +
+                "WHERE user_id = ?;\n" +
+                "\n" +
+                "UPDATE account\n" +
+                "SET balance = balance - ?\n" +
+                "WHERE user_id = ?;\n" +
+                "\n" +
+                "COMMIT;";
 
-        jdbcTemplate.update(sql, userId, amountToWithdraw);
+        SqlRowSet row = jdbcTemplate.queryForRowSet(sql, userId, amountToTransfer);
     }
-
 }

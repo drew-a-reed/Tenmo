@@ -6,6 +6,8 @@ import com.techelevator.tenmo.model.UserCredentials;
 import com.techelevator.tenmo.ui.UserInput;
 import com.techelevator.tenmo.ui.UserOutput;
 
+import java.math.BigDecimal;
+
 public class UIServices {
 
     private static final String API_BASE_URL = "http://localhost:8080/";
