@@ -25,7 +25,6 @@ public class UserInput {
     }
 
     public static UserCredentials promptForCredentials() {
-        System.out.println("Please register a new account.");
         String username = promptForString("Username: ");
         String password = promptForString("Password: ");
         return new UserCredentials(username, password);

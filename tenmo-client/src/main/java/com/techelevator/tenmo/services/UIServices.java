@@ -40,7 +40,7 @@ public class UIServices {
     }
 
     private void handleRegister() {
-
+        UserOutput.newUserWelcome();
         UserCredentials credentials = UserInput.promptForCredentials();
         if (authenticationService.register(credentials)) {
             UserOutput.printSuccess();
@@ -50,6 +50,7 @@ public class UIServices {
     }
 
     private void handleLogin() {
+        UserOutput.returningUserWelcome();
         UserCredentials credentials = UserInput.promptForCredentials();
         currentUser = authenticationService.login(credentials);
         if (currentUser == null) {
@@ -61,7 +62,7 @@ public class UIServices {
 
     private void mainMenu() {
         int menuSelection = -1;
-        while (menuSelection != 0){
+        while (menuSelection != 0) {
             UserOutput.printMainMenu();
             menuSelection = UserInput.mainMenuSelection();
             switch (menuSelection) {
@@ -76,6 +77,7 @@ public class UIServices {
                     break;
                 case 4:
 //                    sendBucks();
+                    UserOutput.displayAllUsers(userServices.listUsers());
                     break;
                 case 5:
                     requestBucks();
@@ -84,7 +86,8 @@ public class UIServices {
                     continue;
                 default:
                     UserOutput.printInvalidSelection();
-            UserInput.pause();
+                    UserInput.pause();
+            }
         }
     }
 

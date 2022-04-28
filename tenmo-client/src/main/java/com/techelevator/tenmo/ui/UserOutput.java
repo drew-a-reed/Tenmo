@@ -38,18 +38,34 @@ public class UserOutput {
     }
 
     public static void printUser(User user){
-        String template = "%-20s\n" +
-                "%5f";
+
+        String template = Colors.BLUE_BOLD_BRIGHT +
+                "User ID:      " + Colors.RESET + "%-10d\n" +
+                Colors.BLUE_BOLD_BRIGHT +
+                "Username:     " + Colors.RESET + "%-20s\n" +
+                Colors.BLUE_UNDERLINED +
+                "                                             \n" +
+                "                                             \n\n" +
+                Colors.RESET;
 
         System.out.printf(template
-                ,user.getUsername()
-                ,user.getId());
+                          ,user.getId()
+                          ,user.getUsername());
+
     }
 
     public static void displayAllUsers(User[] users){
         for(User user: users){
             printUser(user);
         }
+    }
+
+    public static void newUserWelcome(){
+        System.out.println("Welcome to Tenmo, please register for a new account!");
+    }
+
+    public static void returningUserWelcome(){
+        System.out.println("Welcome back! Please login");
     }
 
 
